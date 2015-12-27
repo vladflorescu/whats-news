@@ -1,0 +1,15 @@
+﻿aside {
+  margin-top: 20px;
+}
+
+aside li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside li a {
+  color: black;
+  font-size: 1.15em;
+  font-family: Verdana serif;  
+}

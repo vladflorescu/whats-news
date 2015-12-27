@@ -1,0 +1,109 @@
+﻿div.article-wrapper {
+  position: relative;
+  background-color: white;
+  border: 1px solid #E8D1FF;
+  margin-top: 20px;
+  padding: 20px 40px 30px 40px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+div.article-wrapper div.content-wrapper {
+  min-height: 75px;
+}
+
+div.article-wrapper div.edit-panel {
+  position: absolute;
+  right: 40px;
+}
+
+.category-title, .suggestions-title {
+  text-shadow: 1px 1px 3px #ABABAB;
+}
+
+.category-title, .suggestions-title {
+  margin-left: 30px;
+}
+
+.del-article-button {
+  position: relative;
+  bottom: 2px;
+  border: 0;
+}
+
+/*.suggestions-title {
+  margin-bottom: 40px;
+}*/
+
+div.article-title-wrapper {
+  position: relative;
+  width: calc(100% - 100px);
+  margin-top: 10px;
+  margin-left: 60px;
+}
+
+.article-title-input, .article-title {
+  width: 100%;
+  padding: 4px;
+  font-size: 30px;
+}
+
+.article-title-input {
+  background-color: #EFEFEF;
+  border: none;
+  /* width: 417px; */
+}
+
+.article-title-input:focus {
+  outline: none;
+  border: 1px dashed;
+}
+
+.article-sub {
+  margin-left: 65px;
+}
+
+.category-select-wrapper, .categories-read-only {
+  margin-left: 65px;
+  margin-top: 20px;
+}
+
+.add-category-input {
+  width: 160px !important;
+}
+
+div.article-content-wrapper {
+  position: relative;
+  width: calc(100% - 80px);
+  margin-left: 45px;
+  margin-top: 40px;
+}
+
+div.article-content-wrapper.show-page {
+  padding: 20px;
+}
+
+.article-text-area, .preview-text-area {
+  width: 100%;
+  font-family: 'Crimson' serif;
+  resize: none;
+  background: inherit;
+  border: none;
+  padding: 20px 20px 30px 20px;
+}
+
+.article-text-area:focus, .preview-text-area:focus {
+  border: 1px dashed;
+  outline: none;
+}
+
+.article-text-area {
+  overflow-y: hidden;
+  font-size: 1.3em;
+}
+
+.preview-text-area {
+  margin-top: 20px;
+  font-size: 1.1em;
+  font-style: italic;
+}

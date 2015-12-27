@@ -1,0 +1,102 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>What's news</title>
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/bootstrap.css" /> 
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/css/select2.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/bootstrap-multiselect.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/css/font-awesome.css" />
+    <link href='https://fonts.googleapis.com/css?family=Crimson+Text:400,600,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css' />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/general.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/pagination.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/sidebar.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/article.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/utilities.css" />
+  
+    <script src='<%=ResolveClientUrl("~/Scripts/jquery-2.1.4.js") %>'></script>
+    <script src='<%=ResolveClientUrl("~/Scripts/bootstrap.js") %>'></script>
+    <script src='<%=ResolveClientUrl("~/Scripts/bootstrap-multiselect.js") %>'></script>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="container">
+      <header class="row u-margin-An">
+        <div style="padding: 7px 10px; display: inline-block" class="pull-left">
+          <div class="logo">
+            <asp:HyperLink ID="HLLogoPieceTop" runat="server" 
+              CssClass="logo-piece logo-top" NavigateUrl="~/Index.aspx">WHAT'S</asp:HyperLink>
+            <asp:HyperLink ID="HLLogoPieceBottom" runat="server" 
+              CssClass="logo-piece logo-bottom" NavigateUrl="~/Index.aspx">NEWS?</asp:HyperLink>
+          </div>
+        </div>
+
+        <div style="position: relative; display: inline-block; width: calc(100% - 187px); height: 104px" class="pull-left">
+          <div class="login-links-container">
+            <asp:LoginView ID="LoginView1" runat="server">
+              <AnonymousTemplate>
+                <asp:HyperLink ID="HLSignIn" runat="server" NavigateUrl="~/Login.aspx">Log in</asp:HyperLink>
+                <asp:HyperLink ID="HLSignUp" runat="server">Sign up</asp:HyperLink>
+              </AnonymousTemplate>
+              <LoggedInTemplate>
+                <span>Logged in as <asp:LoginName ID="LoginName1" runat="server" /></span>
+                <asp:LoginStatus ID="LoginStatus1" runat="server" />
+              </LoggedInTemplate>
+            </asp:LoginView>
+          </div>
+
+          <div class="row menu">
+            <div class="menu-item pull-left">
+              <asp:HyperLink ID="HLHomepage" runat="server" 
+              CssClass="light-url" NavigateUrl="~/Index.aspx">Homepage</asp:HyperLink>
+            </div>
+
+            <div class="menu-item pull-left">
+              <asp:LoginView ID="LVAddArticleMenuItem" runat="server">
+                <LoggedInTemplate>
+                  <asp:HyperLink ID="HLAddArticle" runat="server" 
+                    CssClass="light-url" NavigateUrl="~/AddArticle.aspx">Suggest Article</asp:HyperLink>
+                </LoggedInTemplate>
+                <RoleGroups>
+                  <asp:RoleGroup Roles="administrator, publisher">
+                    <ContentTemplate>
+                      <asp:HyperLink ID="HLAddArticle" runat="server" 
+                        CssClass="light-url" NavigateUrl="~/AddArticle.aspx">Add Article</asp:HyperLink>
+                    </ContentTemplate>
+                  </asp:RoleGroup>
+                </RoleGroups>
+              </asp:LoginView>
+            </div>
+
+            <div class="menu-item pull-left">
+              <asp:LoginView ID="LVSuggestions" runat="server">
+                <RoleGroups>
+                  <asp:RoleGroup Roles="administrator, publisher">
+                    <ContentTemplate>
+                      <asp:HyperLink ID="HLSuggestions" runat="server" 
+                        CssClass="light-url" NavigateUrl="~/Suggestions.aspx">Suggestions</asp:HyperLink>
+                    </ContentTemplate>
+                  </asp:RoleGroup>
+                </RoleGroups>
+              </asp:LoginView>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="clearfix"> 
+      </div>
+
+      <div class="wrapper row">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+      </div>
+    </div>
+    </form>
+</body>
+</html>

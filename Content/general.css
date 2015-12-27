@@ -1,0 +1,134 @@
+﻿body {
+  /*background-color: #D0D0D0;*/
+}
+
+a, a:hover {
+  text-decoration: none;
+  color: #3451BD;
+}
+
+ul {
+  list-style-type: none
+}
+
+header {
+  position: relative;
+  background-color: #3451BD;
+  border-bottom: 2px solid #243880;
+  /*border-left: 2px solid #243880;
+  border-right: 2px solid #243880;*/
+}
+
+.light-url, .light-url:hover {
+  color: #D0D0D0;
+}
+
+.logo {
+  display: inline-block;
+  padding: 0px 10px;
+}
+
+.logo-piece {
+  display: block;
+  font-size: 2em;
+  font-family: 'Roboto Slab', serif;
+  font-weight: bold;
+  color: #D0D0D0;
+  text-shadow: 2px 2px 2px #080808;
+}
+
+.logo-piece:hover, .logo-piece:focus {
+  color: #D0D0D0;
+}
+
+.logo-piece:focus {
+  text-decoration: none;
+}
+
+.logo-top {
+  padding-top: 10px;
+}
+
+.logo-bottom {
+  position: relative;
+  padding-left: 50px;
+  bottom: 5px;
+}
+
+.menu {
+  display: inline-block;
+  /*width: calc(100% - 186px);*/
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  margin: 0;
+}
+
+.menu-item a {
+  position: relative;
+  bottom: 3px;
+  padding: 5px;
+  color: initial;
+  background-color: #AFAFAF;
+  border: 2px solid #243880;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.menu-item a:hover {
+  color: initial;
+}
+
+.menu-item:not(:first-child) a {
+  border-left: 0;
+}
+
+.menu-item a.selected {
+  background-color: #EFEFEF;
+  border-bottom-color: #EFEFEF;
+}
+
+.wrapper {
+  background-color: #EFEFEF;
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  border-left:    2px solid #243880;
+  border-right:   2px solid #243880;
+  border-bottom:  2px solid #243880;
+  min-height: 400px;
+}
+
+.multiselect.dropdown-toggle {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.login-links-container {
+  display: inline-block;
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+
+.login-links-container a {
+  color: #D0D0D0;
+  margin-left: 10px;
+  text-shadow: 1px 1px 1px black;
+}
+
+.login-links-container span {
+  color: #D0D0D0;
+  text-shadow: 1px 1px 1px black;
+}
+
+.ugly-login-panel{
+  margin-left: 20px;
+}
+
+.notification {
+  margin-top: 40px;
+  margin-left: 40px;
+  width: calc(100% - 80px);
+}
