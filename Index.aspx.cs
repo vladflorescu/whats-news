@@ -20,19 +20,6 @@ public partial class Index : CollectionPage
       BoundPreviewToParagraphsRepeater(sender, args);
     }
 
-    protected void CalculatePageNumber()
-    {
-      try
-      {
-        PageNumber = int.Parse(Request.Params["Page"]);
-        if (!PageIsValid(PageNumber)) PageNumber = 1;
-      }
-      catch (Exception ex)
-      {
-        PageNumber = 1;
-      }
-    }
-
     protected void RequestCategoryName(SqlConnection con)
     {
       string CategoryId = Request.Params["CategoryId"];
@@ -51,63 +38,11 @@ public partial class Index : CollectionPage
       }
     }
 
-    protected string CalculateArticlesQuery(string CategoryId, bool Count = false)
-    {
-      string AfterSelectStatement = (Count == false)
-        ? " a.Id, a.Title, a.Preview, a.PublisherId, a.PublicationDate, a.Content"
-        : " COUNT(*)";
-
-      if (!String.IsNullOrEmpty(CategoryId))
-      {
-        return "SELECT" + AfterSelectStatement
-          + " FROM ArticlesInCategories aic"
-          + " INNER JOIN Articles a"
-          + " ON aic.ArticleId = a.Id"
-          + " WHERE aic.CategoryId = " + CategoryId
-            + " AND a.Accepted = 1"
-          + ((Count == false) ? " ORDER BY a.PublicationDate DESC" : "");
-      }
-      else
-      {
-        return "SELECT" + AfterSelectStatement
-          + " FROM Articles a"
-          + " WHERE a.Accepted = 1"
-          + ((Count == false) ? " ORDER BY a.PublicationDate DESC" : "");
-      }
-    }
-
-    protected void SetArticlesNumber(SqlConnection Connection)
-    {
-      String Query = CalculateArticlesQuery(Request.Params["CategoryId"], true);
-      SqlCommand Command = new SqlCommand(Query, Connection);
-      ArticlesNumber = int.Parse(Command.ExecuteScalar().ToString());
-    }
-
-    protected void SetAttributesForArticlesDataSource()
-    {
-      string CategoryId = Request.QueryString.Get("CategoryId");
-      string ArticlesQuery = CalculateArticlesQuery(CategoryId);
-
-      ArticlesQuery += " OFFSET " + ((PageNumber - 1) * ItemsLimit)
-        + " ROWS FETCH NEXT " + ItemsLimit + " ROWS ONLY";
-
-      SDSArticles.ConnectionString = this.connectionString;
-      SDSArticles.SelectCommand = ArticlesQuery;
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
       if (!Page.IsPostBack)
       {
-        try
-        {
-          PageNumber = int.Parse(Request.Params["Page"]);
-          if (!PageIsValid(PageNumber)) PageNumber = 1;
-        }
-        catch (Exception ex)
-        {
-          PageNumber = 1;
-        }
+        PageNumber = CalculatePageNumber();
 
         SqlConnection Connection = new SqlConnection(connectionString);
         try
@@ -115,8 +50,8 @@ public partial class Index : CollectionPage
           Connection.Open();
 
           RequestCategoryName(Connection);
-          SetArticlesNumber(Connection);
-          SetAttributesForArticlesDataSource();
+          SetArticlesNumber(Connection, Request.Params["CategoryId"], true);
+          SetSelectCommandForArticlesDataSource(SDSArticles, Request.Params["CategoryId"], true, true);
         }
         catch (Exception ex)
         {

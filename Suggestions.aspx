@@ -5,8 +5,7 @@
     <h2 class="suggestions-title">Articles Suggested by Users</h2>
 
     <%-- ConnectionString and Select Command in code behind --%>
-    <asp:SqlDataSource ID="SDSArticles" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>"
-      SelectCommand="SELECT a.Id, a.Title, a.Preview, a.PublisherId, a.PublicationDate, a.Content FROM Articles a WHERE a.Accepted = 0"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SDSArticles" runat="server"></asp:SqlDataSource>
 
     <asp:Repeater ID="RArticles" runat="server" DataSourceID="SDSArticles" OnItemDataBound="BoundPreviewToParagraphsRepeater">
       <ItemTemplate>
@@ -23,6 +22,24 @@
         </div>
       </ItemTemplate>
     </asp:Repeater>
+
+    <div class="pagination-component">
+      <ul class="pager">
+        <% if (PageHasItems(PageNumber - 1)) { %>
+          <li>
+            <a href="<%= ResolveUrl("~/Suggestions.aspx?Page=" + (PageNumber - 1)) %>"
+              class="pagination-link">Previous Page</a>
+          </li>
+        <% } %>
+
+        <% if (PageHasItems(PageNumber + 1)) { %>
+          <li>
+            <a href="<%= ResolveUrl("~/Suggestions.aspx?Page=" + (PageNumber + 1)) %>"
+              class="pagination-link">Next Page</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
   </main>
 </asp:Content>
 

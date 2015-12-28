@@ -54,6 +54,18 @@
       </ItemTemplate>
     </asp:Repeater>
 
+    <% if (ItemsForRequestedCategory == false) { %>
+      <div class="notification u-margin-Ll">
+        <% if (String.IsNullOrEmpty(CategoryName)) { %>
+          <p class="lead">The requested category doesn't exist.</p>
+        <% } else if (!PageHasItems(PageNumber) && PageNumber > 1) { %>
+          <p class="lead">The page number is too high.</p>
+        <% } else { %>
+          <p class="lead">No available articles for the requested category.</p>
+        <% } %>
+      </div>
+    <% } %>
+
     <div class="pagination-component">
       <ul class="pager">
         <% if (PageHasItems(PageNumber - 1)) { %>
@@ -71,18 +83,6 @@
         <% } %>
       </ul>
     </div>
-
-    <% if (ItemsForRequestedCategory == false) { %>
-      <div class="notification u-margin-Ll">
-        <% if (String.IsNullOrEmpty(CategoryName)) { %>
-          <p class="lead">The requested category doesn't exist.</p>
-        <% } else if (!PageHasItems(PageNumber)) { %>
-          <p class="lead">The page number is too high.</p>
-        <% } else { %>
-          <p class="lead">No available articles for the requested category.</p>
-        <% } %>
-      </div>
-    <% } %>
   </main>
 </asp:Content>
 
