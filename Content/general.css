@@ -89,6 +89,7 @@ header {
 }
 
 .wrapper {
+  position: relative;
   background-color: #EFEFEF;
   margin: 0;
   padding-top: 20px;
@@ -97,6 +98,10 @@ header {
   border-right:   2px solid #243880;
   border-bottom:  2px solid #243880;
   min-height: 400px;
+}
+
+main {
+  margin-top: 18px;
 }
 
 .multiselect.dropdown-toggle {

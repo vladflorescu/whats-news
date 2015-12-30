@@ -1,0 +1,39 @@
+﻿.filtering-options {
+  position: absolute;
+  top: 15px;
+  right: 40px;
+}
+
+.search-group {
+  display: inline-block;
+}
+
+.search-group > .search-input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0;
+}
+
+.search-group > .search-input:focus {
+  outline: none;
+  -webkit-appearance: none;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  border-color: #ccc;
+}
+
+.search-group > .search-button {
+  position: relative;
+  right: 5px;
+  border-left: 0;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.search-group > .search-button:hover {
+  border-color: #ccc;
+}

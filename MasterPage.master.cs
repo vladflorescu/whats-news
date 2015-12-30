@@ -39,6 +39,17 @@ public partial class MasterPage : System.Web.UI.MasterPage
           }
         }
       }
+      else if (currentPage.EndsWith("ManageUsers.aspx"))
+      {
+        foreach (string role in Roles.GetRolesForUser())
+        {
+          if (role == "administrator")
+          {
+            HyperLink ManageUsersMenuItem = (HyperLink)(LVManageUsers.FindControl("HLManageUsers"));
+            if (ManageUsersMenuItem != null) ManageUsersMenuItem.CssClass += " selected";
+          }
+        }
+      }
     }
   }
 }

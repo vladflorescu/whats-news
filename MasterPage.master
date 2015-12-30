@@ -8,11 +8,14 @@
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/bootstrap.css" /> 
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/css/select2.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/bootstrap-multiselect.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/bootstrap-switch.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/css/font-awesome.css" />
     <link href='https://fonts.googleapis.com/css?family=Crimson+Text:400,600,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css' />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/general.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/pagination.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/filtering-options.css" />
+    <link type="text/css" rel="stylesheet" runat="server" href="~/Content/table.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/sidebar.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/article.css" />
     <link type="text/css" rel="stylesheet" runat="server" href="~/Content/utilities.css" />
@@ -20,6 +23,7 @@
     <script src='<%=ResolveClientUrl("~/Scripts/jquery-2.1.4.js") %>'></script>
     <script src='<%=ResolveClientUrl("~/Scripts/bootstrap.js") %>'></script>
     <script src='<%=ResolveClientUrl("~/Scripts/bootstrap-multiselect.js") %>'></script>
+    <script src='<%=ResolveClientUrl("~/Scripts/bootstrap-switch.js") %>'></script>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -41,7 +45,7 @@
             <asp:LoginView ID="LoginView1" runat="server">
               <AnonymousTemplate>
                 <asp:HyperLink ID="HLSignIn" runat="server" NavigateUrl="~/Login.aspx">Log in</asp:HyperLink>
-                <asp:HyperLink ID="HLSignUp" runat="server">Sign up</asp:HyperLink>
+                <asp:HyperLink ID="HLSignUp" runat="server" NavigateUrl="~/SignUp.aspx">Sign up</asp:HyperLink>
               </AnonymousTemplate>
               <LoggedInTemplate>
                 <span>Logged in as <asp:LoginName ID="LoginName1" runat="server" /></span>
@@ -80,6 +84,19 @@
                     <ContentTemplate>
                       <asp:HyperLink ID="HLSuggestions" runat="server" 
                         CssClass="light-url" NavigateUrl="~/Suggestions.aspx">Suggestions</asp:HyperLink>
+                    </ContentTemplate>
+                  </asp:RoleGroup>
+                </RoleGroups>
+              </asp:LoginView>
+            </div>
+
+            <div class="menu-item pull-left">
+              <asp:LoginView ID="LVManageUsers" runat="server">
+                <RoleGroups>
+                  <asp:RoleGroup Roles="administrator">
+                    <ContentTemplate>
+                      <asp:HyperLink ID="HLManageUsers" runat="server" 
+                        CssClass="light-url" NavigateUrl="~/ManageUsers.aspx">Manage Users</asp:HyperLink>
                     </ContentTemplate>
                   </asp:RoleGroup>
                 </RoleGroups>

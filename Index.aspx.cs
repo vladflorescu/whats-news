@@ -12,13 +12,6 @@ using System.Web.UI.WebControls;
 public partial class Index : CollectionPage
 {
     protected string CategoryName = null;
-    protected bool ItemsForRequestedCategory = false;
-
-    protected void ItemBound(object sender, RepeaterItemEventArgs args)
-    {
-      ItemsForRequestedCategory = true;
-      BoundPreviewToParagraphsRepeater(sender, args);
-    }
 
     protected void RequestCategoryName(SqlConnection con)
     {
@@ -42,7 +35,8 @@ public partial class Index : CollectionPage
     {
       if (!Page.IsPostBack)
       {
-        PageNumber = CalculatePageNumber();
+        InitializeDatabaseQueryParameters();
+        SortCategory.SelectedIndex = CalculateSelectedIndex(Request.QueryString["OrderBy"]);
 
         SqlConnection Connection = new SqlConnection(connectionString);
         try
@@ -50,8 +44,8 @@ public partial class Index : CollectionPage
           Connection.Open();
 
           RequestCategoryName(Connection);
-          SetArticlesNumber(Connection, Request.Params["CategoryId"], true);
-          SetSelectCommandForArticlesDataSource(SDSArticles, Request.Params["CategoryId"], true, true);
+          SetArticlesNumber(Connection, true);
+          SetSelectCommandForArticlesDataSource(SDSArticles, true, true);
         }
         catch (Exception ex)
         {
@@ -189,7 +183,6 @@ public partial class Index : CollectionPage
 
     protected void DeleteButton_ServerClick(object sender, EventArgs e)
     {
-
       try
       {
         int ArticleId = int.Parse(((HtmlButton)sender).Attributes["data-article-id"]);
@@ -237,5 +230,16 @@ public partial class Index : CollectionPage
       {
         LAnswer.Text = "Error while parsing article id: " + ex.Message;
       }
+    }
+
+    protected void SearchButton_ServerClick(object sender, EventArgs e)
+    {
+      var QueryHash = HttpUtility.ParseQueryString(Request.QueryString.ToString());
+      QueryHash.Set("Q", TBSearch.Text);
+      QueryHash.Set("OrderBy", SortCategory.Value);
+      QueryHash.Set("Page", "1");
+      string Url = Request.Url.AbsolutePath;
+      string UpdatedQueryString = "?" + QueryHash.ToString();
+      Response.Redirect(Url + UpdatedQueryString);
     }
 }

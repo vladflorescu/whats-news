@@ -449,13 +449,13 @@
   cursor: default; }
   
 .u-text-center {
-  text-align: center; }
+  text-align: center !important; }
   
 .u-text-start {
-  text-align: left; }
+  text-align: left !important; }
   
 .u-text-end {
-  text-align: right; }
+  text-align: right !important; }
   
 .u-text-extra-small {
   font-size: 15px;
@@ -465,23 +465,23 @@
   border-radius: 50%; }
   
 .u-block {
-  display: block;
+  display: block !important;
 }
   
 .u-inline {
-  display: inline;
+  display: inline !important;
 }
   
 .u-inline-block {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .u-pos-relative {
-  position: relative;
+  position: relative !important;
 }
   
 .u-pos-absolute {
-  position: absolute;
+  position: absolute !important;
 }
   
 .u-left-zero{
@@ -501,7 +501,7 @@
 }
   
 .u-align-middle {
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
   
 .u-vertical-center {

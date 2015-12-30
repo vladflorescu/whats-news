@@ -1,0 +1,12 @@
+﻿.table > thead {
+  font-size: 1.3em;
+  text-transform: uppercase;
+}
+
+.table > tbody {
+  font-size: 1.2em;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}

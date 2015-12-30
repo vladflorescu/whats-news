@@ -1,8 +1,34 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Index.aspx.cs" Inherits="Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script src='<%=ResolveClientUrl("~/Scripts/filtering-options.js") %>'></script>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+  <div class="filtering-options">
+    <div class="form-inline">
+      <div class="form-group sort-group u-margin-Rxxs">
+        <label>Sort by:</label>
+        <select id="SortCategory" runat="server"
+        class="form-control input-sm">
+          <option value="Publication Date (DESC)">Publication Date (DESC)</option>
+          <option value="Publication Date (ASC)">Publication Date (ASC)</option>
+          <option value="Title (DESC)">Title (DESC)</option>
+          <option value="Title (ASC)">Title (ASC)</option>
+        </select>
+      </div>
+
+      <div class="search-group">
+        <asp:TextBox ID="TBSearch" runat="server" placeholder="Search for article..."
+          CssClass="form-control input-sm search-input"></asp:TextBox>
+        <button ID="SearchButton" runat="server" onserverclick="SearchButton_ServerClick"
+        class="btn btn-default btn-sm search-button">
+          <i class="fa fa-search"></i>
+        </button>   
+      </div>
+    </div>
+  </div>
+
   <aside class="col-xs-3">
     <ul id="CategoriesList" runat="server" class="col-xs-10"></ul>
     <div class="col-xs-2"> </div>
@@ -16,6 +42,18 @@
     </div>
 
     <h2 class="category-title"><%= this.CategoryName %></h2>
+
+    <% if (ItemsForRequestedCategory == false) { %>
+      <div class="notification u-margin-Ll">
+        <% if (String.IsNullOrEmpty(CategoryName)) { %>
+          <p class="lead">The requested category doesn't exist.</p>
+        <% } else if (!PageHasItems(PageNumber) && PageNumber > 1) { %>
+          <p class="lead">The page number is too high.</p>
+        <% } else { %>
+          <p class="lead">No available articles for the requested category.</p>
+        <% } %>
+      </div>
+    <% } %>
 
     <%-- ConnectionString and Select Command in code behind --%>
     <asp:SqlDataSource ID="SDSArticles" runat="server"></asp:SqlDataSource>
@@ -49,36 +87,22 @@
             </asp:Repeater>
           </div>
           <asp:HyperLink ID="HLReadMore" NavigateUrl='<%# "~/Article.aspx?Id=" + DataBinder.Eval(Container.DataItem, "Id") %>' 
-            runat="server">Read more.</asp:HyperLink>
+          runat="server">Read more.</asp:HyperLink>
         </div>
       </ItemTemplate>
     </asp:Repeater>
-
-    <% if (ItemsForRequestedCategory == false) { %>
-      <div class="notification u-margin-Ll">
-        <% if (String.IsNullOrEmpty(CategoryName)) { %>
-          <p class="lead">The requested category doesn't exist.</p>
-        <% } else if (!PageHasItems(PageNumber) && PageNumber > 1) { %>
-          <p class="lead">The page number is too high.</p>
-        <% } else { %>
-          <p class="lead">No available articles for the requested category.</p>
-        <% } %>
-      </div>
-    <% } %>
 
     <div class="pagination-component">
       <ul class="pager">
         <% if (PageHasItems(PageNumber - 1)) { %>
           <li>
-            <a href="<%= ResolveUrl("~/Index.aspx?Page=" + (PageNumber - 1) + "&CategoryId=" + Request.Params["CategoryId"]) %>"
-              class="pagination-link">Previous Page</a>
+            <a href="<%= SpecificPageUrl(PageNumber - 1) %>" class="pagination-link">Previous Page</a>
           </li>
         <% } %>
 
         <% if (PageHasItems(PageNumber + 1)) { %>
           <li>
-            <a href="<%= ResolveUrl("~/Index.aspx?Page=" + (PageNumber + 1) + "&CategoryId=" + Request.Params["CategoryId"]) %>"
-              class="pagination-link">Next Page</a>
+            <a href="<%= SpecificPageUrl(PageNumber + 1) %>" class="pagination-link">Next Page</a>
           </li>
         <% } %>
       </ul>
