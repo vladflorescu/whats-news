@@ -1,5 +1,6 @@
 ﻿body {
-  /*background-color: #D0D0D0;*/
+  /*font-family: 'Source Sans Pro', 'Crimson Text', sans-serif;*/
+  font-size: 14px;
 }
 
 a, a:hover {
@@ -69,7 +70,7 @@ header {
   bottom: 3px;
   padding: 5px;
   color: initial;
-  background-color: #AFAFAF;
+  background-color: #B3B3B3;
   border: 2px solid #243880;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
