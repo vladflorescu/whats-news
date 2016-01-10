@@ -35,6 +35,7 @@ div.article-wrapper div.edit-panel {
   margin-bottom: 40px;
 }*/
 
+
 div.article-title-wrapper {
   position: relative;
   width: calc(100% - 100px);
@@ -61,6 +62,7 @@ div.article-title-wrapper {
 
 .article-sub {
   margin-left: 65px;
+  width: calc(100% - 100px);
 }
 
 .category-select-wrapper, .categories-read-only {
@@ -70,6 +72,33 @@ div.article-title-wrapper {
 
 .add-category-input {
   width: 160px !important;
+}
+
+div.remote-source-group {
+  margin-left: 65px;
+  position: relative;
+  top: 40px;
+}
+
+div.remote-source-group > div.remote-cbox {
+  position: relative;
+  margin-left: 20px;
+}
+
+div.remote-source-group > div.remote-cbox label {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+div.remote-source-group > div.remote-cbox label input {
+  position: absolute;
+  left: -20px;
+}
+
+div.remote-source-group > .source-input {
+  width: 360px;
+  margin-top: 15px;
+  margin-bottom: 80px;
 }
 
 div.article-content-wrapper {
@@ -106,4 +135,43 @@ div.article-content-wrapper.show-page {
   margin-top: 20px;
   font-size: 1.1em;
   font-style: italic;
+}
+
+div.comments-wrapper {
+  margin-top: 60px;
+  position: relative;
+  width: 80%;
+  margin: 60px auto 0 auto;
+}
+
+div.comments-wrapper .comment-textarea {
+  width: 100%;
+  resize: none;
+}
+
+div.comments-wrapper .comment-textarea, div.comments-wrapper div.comments div.comment {
+  padding: 20px 20px 20px 20px;
+  border: 1px solid rgb(208, 208, 208);
+}
+
+div.comments-wrapper div.comments div.comment {
+  margin-top: 20px;
+  background-color: white;
+  background-color: white;
+}
+
+div.comments-wrapper div.comments div.comment .comment-name {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+div.comments-wrapper div.comments div.comment .comment-date {
+  font-size: 12px;
+}
+
+div.comments-wrapper div.comments div.comment .comment-content {
+  margin-top:20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

@@ -76,7 +76,16 @@ public partial class EditArticle : ArticlePage
 
               TBTitle.Text = Title = reader["Title"].ToString();
               TBPreview.Text = Preview = reader["Preview"].ToString();
-              TBArticle.Text = Content = reader["Content"].ToString();
+
+              if (bool.Parse(reader["Remote"].ToString()) == false)
+              {
+                TBArticle.Text = Content = reader["Content"].ToString();
+              }
+              else
+              {
+                TBSource.Text = Content = reader["Content"].ToString();
+                CBRemote.Checked = true;
+              }
             }
             else
             {
@@ -138,14 +147,16 @@ public partial class EditArticle : ArticlePage
     {
       string Title = TBTitle.Text.Trim();
       string Preview = TBPreview.Text.Trim();
-      string Content = TBArticle.Text.Trim();
+      bool Remote = CBRemote.Checked;
+      string Content = Remote ? TBSource.Text.Trim() : TBArticle.Text.Trim();
 
       if (Title == "" || Content == "")
       {
         throw new Exception("The title and the content can't be empty.");
       }
 
-      string queryBeginning = "UPDATE Articles SET Title = @title, Preview = @preview, Content = @content";
+      string queryBeginning = "UPDATE Articles"
+                            + " SET Title = @title, Preview = @preview, Remote = @remote, Content = @content";
       string queryEnd = " WHERE Id = @id";
 
       if (!ArticleIsAccepted)
@@ -157,9 +168,10 @@ public partial class EditArticle : ArticlePage
 
       SqlCommand command = new SqlCommand(query, connection);
       command.Parameters.AddWithValue("id", Request.Params["Id"]);
-      command.Parameters.AddWithValue("title", TBTitle.Text);
-      command.Parameters.AddWithValue("preview", TBPreview.Text);
-      command.Parameters.AddWithValue("content", TBArticle.Text);
+      command.Parameters.AddWithValue("title", Title);
+      command.Parameters.AddWithValue("preview", Preview);
+      command.Parameters.AddWithValue("remote", Remote);
+      command.Parameters.AddWithValue("content", Content);
       if (!ArticleIsAccepted)
       {
         command.Parameters.AddWithValue("publisherId", Membership.GetUser().ProviderUserKey);
@@ -209,7 +221,8 @@ public partial class EditArticle : ArticlePage
             try
             {
               UpdateNewCategories(connection);
-              Response.Redirect("~/Article.aspx?Id=" + Request.Params["Id"]);
+              Response.Redirect(CBRemote.Checked ? "~/Index.aspx"
+                                                 : "~/Article.aspx?Id=" + Request.Params["Id"]);
             }
             catch (Exception ex)
             {

@@ -5,6 +5,10 @@
 
   var addCategoryInput = $('.add-category-input');
   var hiddenInput = $('.hidden-categories-input');
+  var articleTextarea = $('.article-text-area');
+  var remoteSourceCheckbox = $('.remote-source-group .remote-cbox input');
+  var remoteSourceInput = $('.remote-source-group .source-input');
+  var contentAndSourceValidator = $('.content-and-source-validator');
 
   //$('div.category-select-wrapper select').on('change', function (evt) {
   //  if ($(evt.target).val() === 'other') {
@@ -45,6 +49,8 @@
       multiselect.multiselect('rebuild');
       addToHiddenInput(addCategoryInput.val());
       addCategoryInput.val('');
+
+      return false;
     } else if (evt.keyCode === 220) {
       evt.preventDefault();
     }
@@ -81,8 +87,6 @@
     });
   })
 
-  var articleTextarea = $('.article-text-area');
-
   articleTextarea.on('keydown.ignoreTabs', function (evt) {
     if (evt.keyCode === 9) { // tab was pressed
       // get caret position/selection
@@ -110,10 +114,10 @@
     articleTextarea.get(0).style.height = articleTextarea.get(0).scrollHeight + 'px';
   }
 
-  $('.article-text-area').on('keydown.resizeTextarea', resizeTextarea);
-  $('.article-text-area').on('change', resizeTextarea);
+  articleTextarea.on('keydown.resizeTextarea', resizeTextarea);
+  articleTextarea.on('change', resizeTextarea);
 
-  $(".article-text-area").bind({
+  articleTextarea.bind({
     paste: resizeTextarea,
     cut: resizeTextarea,
     drop: resizeTextarea
@@ -121,9 +125,25 @@
 
   $(window).on('resize.resizeTextarea', resizeTextarea);
 
+  if (remoteSourceCheckbox.is(':checked')) swapContentInputs();
+
+  remoteSourceInput.on('blur', _.debounce(validateRemoteSource, 200));
+  articleTextarea.on('blur',_.debounce(validateArticleTextarea, 200));
+
+  remoteSourceCheckbox.on('change', function (evt) {
+    $('.hidden-checkbox-value').val(remoteSourceCheckbox.is(':checked') ? '1' : '');
+    contentAndSourceValidator.addClass('u-is-invisible');
+    swapContentInputs();
+  });
+
+  function swapContentInputs() {
+    remoteSourceInput.toggleClass('u-is-hidden');
+    articleTextarea.toggleClass('u-is-hidden');
+  }
+
   function addToHiddenInput(value) {
     hiddenInput.val(hiddenInput.val() + value + '|');
-  };
+  }
 
   function removeFromHiddenInput(value) {
     hiddenInput.val(hiddenInput.val().replace(value + '|', ''));

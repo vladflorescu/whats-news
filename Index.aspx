@@ -30,8 +30,10 @@
   </div>
 
   <aside class="col-xs-3">
-    <ul id="CategoriesList" runat="server" class="col-xs-10"></ul>
-    <div class="col-xs-2"> </div>
+    <ul id="CategoriesList" runat="server" class="col-xs-10">
+      <label class="u-margin-Bxs">Browse by category</label>
+    </ul>
+    <div class="col-xs-2"></div>
   </aside>
 
   <main class="col-xs-9">
@@ -86,8 +88,12 @@
               </ItemTemplate>
             </asp:Repeater>
           </div>
-          <asp:HyperLink ID="HLReadMore" NavigateUrl='<%# "~/Article.aspx?Id=" + DataBinder.Eval(Container.DataItem, "Id") %>' 
-          runat="server">Read more.</asp:HyperLink>
+
+          <asp:HyperLink ID="HLReadMore"
+           NavigateUrl ='<%# (bool)DataBinder.Eval(Container.DataItem, "Remote")
+               ? DataBinder.Eval(Container.DataItem, "Content")
+               : "~/Article.aspx?Id=" + DataBinder.Eval(Container.DataItem, "Id") %>' 
+            runat="server"><%# (bool)DataBinder.Eval(Container.DataItem, "Remote") ? "Go to source." : "Read more." %></asp:HyperLink>
         </div>
       </ItemTemplate>
     </asp:Repeater>

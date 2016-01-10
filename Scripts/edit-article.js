@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
   var articleTextarea = $('.article-text-area');
+  var remoteSourceCheckbox = $('.remote-source-group .remote-cbox input');
+  var remoteSourceInput = $('.remote-source-group .source-input');
+  var contentAndSourceValidator = $('.content-and-source-validator');
 
   articleTextarea.on('keydown.ignoreTabs', function (evt) {
     if (evt.keyCode === 9) { // tab was pressed
@@ -38,4 +41,20 @@
   });
 
   $(window).on('resize.resizeTextarea', resizeTextarea);
+
+  if (remoteSourceCheckbox.is(':checked')) swapContentInputs();
+
+  remoteSourceInput.on('blur', _.debounce(validateRemoteSource, 200));
+  articleTextarea.on('blur', _.debounce(validateArticleTextarea, 200));
+
+  remoteSourceCheckbox.on('change', function (evt) {
+    $('.hidden-checkbox-value').val(remoteSourceCheckbox.is(':checked') ? '1' : '');
+    contentAndSourceValidator.addClass('u-is-invisible');
+    swapContentInputs();
+  });
+
+  function swapContentInputs() {
+    remoteSourceInput.toggleClass('u-is-hidden');
+    articleTextarea.toggleClass('u-is-hidden');
+  }
 });

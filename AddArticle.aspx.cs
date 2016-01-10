@@ -51,9 +51,12 @@ public partial class AddArticle : BasePage
         string currentUserName = Membership.GetUser().UserName;
         bool currentUserIsAdministratorOrPublisher = this.currentUserIsAdministratorOrPublisher();
 
-        string Title = ((TextBox)(LVContent.FindControl("TBTitle"))).Text.Trim();
-        string Preview = ((TextBox)(LVContent.FindControl("TBPreview"))).Text.Trim();
-        string Content = ((TextBox)(LVContent.FindControl("TBArticle"))).Text.Trim();
+        string Title = ((TextBox)LVContent.FindControl("TBTitle")).Text.Trim();
+        string Preview = ((TextBox)LVContent.FindControl("TBPreview")).Text.Trim();
+        bool Remote = ((CheckBox)LVContent.FindControl("CBRemote")).Checked;
+
+        string Content = Remote ? ((TextBox)LVContent.FindControl("TBSource")).Text.Trim()
+                                  : ((TextBox)LVContent.FindControl("TBArticle")).Text.Trim();
 
         if (Title == "" || Content == "") 
         {
@@ -77,6 +80,12 @@ public partial class AddArticle : BasePage
           showErrorMessage("At least one category must be chosen.");
           return;
         }
+        else if (NewCategoriesNames.Any(name => name.Length > DatabaseConstants.CategoryNameMaxLength))
+        {
+          showErrorMessage("Categories' names can't be longer than " 
+            + DatabaseConstants.CategoryNameMaxLength + " characters.");
+          return;
+        }
 
         //I can't use the inline if here
         DateTime? PublicationDate = null;
@@ -88,9 +97,9 @@ public partial class AddArticle : BasePage
                                                                 : currentUserId;
         bool Accepted = (currentUserIsAdministratorOrPublisher) ? true : false;
 
-        string queryBeginning = "INSERT INTO Articles (Title, Content, Accepted";
+        string queryBeginning = "INSERT INTO Articles (Title, Content, Remote, Accepted";
         string queryMiddle = " OUTPUT INSERTED.Id";
-        string queryEnd = " VALUES (@title, @content, @accepted";
+        string queryEnd = " VALUES (@title, @content, @remote, @accepted";
 
         if (Preview != "")
         {
@@ -120,6 +129,7 @@ public partial class AddArticle : BasePage
           SqlCommand articleCommand = new SqlCommand(articleQuery, connection);
           articleCommand.Parameters.AddWithValue("title", Title);
           articleCommand.Parameters.AddWithValue("content", Content);
+          articleCommand.Parameters.AddWithValue("remote", Remote);
           articleCommand.Parameters.AddWithValue("accepted", Accepted);
 
           if (Preview != "") articleCommand.Parameters.AddWithValue("preview", Preview);

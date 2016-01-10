@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AddArticle.aspx.cs" Inherits="AddArticle" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+  <script src='<%=ResolveClientUrl("~/Scripts/validate-article-content.js")%>'></script>
   <script src='<%=ResolveClientUrl("~/Scripts/add-article.js")%>'></script>
 </asp:Content>
 
@@ -36,8 +37,16 @@
           CssClass="preview-text-area" ></asp:TextBox>
       </div>
 
-      <div class="article-content-wrapper">
-        <asp:RequiredFieldValidator ID="RFVContent" runat="server" ErrorMessage="The article can't be empty." ControlToValidate="TBArticle" CssClass="text-danger"></asp:RequiredFieldValidator>
+      <div class="form remote-source-group content-and-source-validator-wrapper">
+        <div class="remote-cbox">
+          <label><asp:CheckBox ID="CBRemote" runat="server"/> Use an external source</label>
+        </div>
+        <span class="content-and-source-validator text-danger u-inline-block"></span>
+        <asp:TextBox ID="TBSource" runat="server" CssClass="form-control source-input u-is-hidden"
+          placeholder="Insert the url for aricle..."></asp:TextBox>
+      </div>
+
+      <div class="article-content-wrapper content">
         <asp:TextBox ID="TBArticle" TextMode="MultiLine"  Columns="80" Rows="8" 
           runat="server" placeholder="Here goes my text." CssClass="article-text-area" ></asp:TextBox>
       </div>
@@ -49,8 +58,8 @@
               <ContentTemplate>
 
                 <asp:Button ID="BSubmit" runat="server" Text="Publish Article" 
-                  CssClass="btn btn-primary u-bg-color-ink u-color-gray"
-                  OnClick="BSubmit_Click" UseSubmitBehavior="False" />
+                  CssClass="btn btn-primary u-bg-color-ink u-color-gray article-submit-button" 
+                  OnClientClick="return validatePage()" OnClick="BSubmit_Click"/>
 
               </ContentTemplate>
             </asp:RoleGroup>
@@ -58,8 +67,8 @@
           <LoggedInTemplate>
 
             <asp:Button ID="BSubmit" runat="server" Text="Suggest Article" 
-              CssClass="btn btn-primary u-bg-color-ink u-color-gray" 
-              OnClick="BSubmit_Click" UseSubmitBehavior="False" />
+              CssClass="btn btn-primary u-bg-color-ink u-color-gray article-submit-button" 
+              OnClientClick="return validatePage()" OnClick="BSubmit_Click"/>
 
           </LoggedInTemplate>
         </asp:LoginView>

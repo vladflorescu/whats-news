@@ -118,7 +118,7 @@ public class CollectionPage : BasePage
     string CategoryId = Request.Params["CategoryId"];
 
     string AfterSelectStatement = (Count == false)
-      ? " a.Id, a.Title, a.Preview, a.PublisherId, a.PublicationDate, a.Content"
+      ? "*" //" a.Id, a.Title, a.Preview, a.PublisherId, a.PublicationDate, a.Content"
       : " COUNT(*)";
 
     string SearchValue = Request.Params["Q"];
