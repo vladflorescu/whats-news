@@ -140,7 +140,8 @@ public partial class Article : ArticlePage
       finally
       {
         Connection.Close();
-        ((TextBox)LVComment.FindControl("TBComment")).Text = "";
+        TextBox CommentTextBox = (TextBox)LVComment.FindControl("TBComment");
+        if (CommentTextBox != null) CommentTextBox.Text = "";
       }
     }
 
